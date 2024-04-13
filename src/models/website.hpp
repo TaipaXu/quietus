@@ -7,8 +7,8 @@ namespace Model
     class Website
     {
     public:
-        Website(const QString &id, const QString &name, const QString &favicon, const QString &url);
-        Website(const QString &name, const QString &favicon, const QString &url);
+        Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode = true);
+        Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode = true);
         Website();
         ~Website();
 
@@ -19,6 +19,8 @@ namespace Model
         void setFavicon(const QString &favicon);
         const QString &getUrl() const;
         void setUrl(const QString &url);
+        bool isMobileMode() const;
+        void setMobileMode(bool mobileMode);
         void clear();
 
     private:
@@ -26,6 +28,7 @@ namespace Model
         QString name;
         QString favicon;
         QString url;
+        bool mobileMode;
     };
 
     inline const QString &Website::getId() const
@@ -46,5 +49,10 @@ namespace Model
     inline const QString &Website::getUrl() const
     {
         return url;
+    }
+
+    inline bool Website::isMobileMode() const
+    {
+        return mobileMode;
     }
 } // namespace Model

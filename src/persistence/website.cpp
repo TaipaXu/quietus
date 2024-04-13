@@ -72,8 +72,9 @@ namespace Persistence
             const QString name = websiteObject["name"].toString();
             const QString favicon = websiteObject["favicon"].toString();
             const QString url = websiteObject["url"].toString();
+            const bool isMobileMode = websiteObject["mobileMode"].toBool(true);
 
-            const std::shared_ptr<Model::Website> websiteModel = std::make_shared<Model::Website>(name, favicon, url);
+            const std::shared_ptr<Model::Website> websiteModel = std::make_shared<Model::Website>(id, name, favicon, url, isMobileMode);
             websites.push_back(websiteModel);
         }
     }
@@ -95,6 +96,7 @@ namespace Persistence
             websiteObject["name"] = website->getName();
             websiteObject["favicon"] = website->getFavicon();
             websiteObject["url"] = website->getUrl();
+            websiteObject["mobileMode"] = website->isMobileMode();
 
             websitesArray.append(websiteObject);
         }

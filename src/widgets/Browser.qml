@@ -8,10 +8,14 @@ ColumnLayout {
     spacing: 0
 
     required property string url
+    required property bool mobileMode
 
     signal goHome
     signal titleChanged(string title)
     signal iconChanged(string url)
+
+    property string desktopUserAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0"
+    property string mobileUserAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1 Edg/122.0.0.0"
 
     Pane {
         Layout.fillWidth: true
@@ -52,18 +56,33 @@ ColumnLayout {
                 onClicked: webview.reload()
             }
 
+            ToolButton {
+                width: 50
+                height: 50
+                icon.source: root.mobileMode ? "qrc:/images/mobile" : "qrc:/images/desktop"
+                onClicked: {
+                    root.mobileMode = !root.mobileMode
+                    if (mobileMode) {
+                        webProfile.httpUserAgent = root.mobileUserAgent
+                    } else {
+                        webProfile.httpUserAgent = root.desktopUserAgent
+                    }
+                    webview.reload()
+                }
+            }
+
             Item {
                 Layout.fillWidth: true
             }
         }
     }
 
-
     WebEngineView {
         id: webview
         Layout.fillWidth: true
         height: parent.height - header.height
         url: root.url
+        profile: webProfile
 
         onTitleChanged: {
             root.titleChanged(webview.title)
@@ -76,5 +95,10 @@ ColumnLayout {
         onIconChanged: {
             root.iconChanged(webview.icon)
         }
+    }
+
+    WebEngineProfile {
+        id: webProfile
+        httpUserAgent: root.mobileMode ? root.mobileUserAgent : root.desktopUserAgent
     }
 }

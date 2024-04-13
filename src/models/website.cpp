@@ -3,18 +3,18 @@
 
 namespace Model
 {
-    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url)
-        : id{id}, name(name), favicon(favicon), url(url)
+    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode)
+        : id{id}, name(name), favicon(favicon), url(url), mobileMode(mobileMode)
     {
     }
 
-    Website::Website(const QString &name, const QString &favicon, const QString &url)
-        : Website(Util::Common::getUuid(), name, favicon, url)
+    Website::Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode)
+        : Website(Util::Common::getUuid(), name, favicon, url, mobileMode)
     {
     }
 
     Website::Website()
-        : Website("", "", "")
+        : Website("", "", "", true)
     {
     }
 
@@ -43,6 +43,14 @@ namespace Model
         if (this->url != url)
         {
             this->url = url;
+        }
+    }
+
+    void Website::setMobileMode(bool mobileMode)
+    {
+        if (this->mobileMode != mobileMode)
+        {
+            this->mobileMode = mobileMode;
         }
     }
 

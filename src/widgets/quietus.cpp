@@ -67,6 +67,7 @@ namespace Widget
             {"name", website->getName()},
             {"favicon", website->getFavicon()},
             {"url", website->getUrl()},
+            {"mobileMode", website->isMobileMode()},
         });
         engine->load("qrc:/widgets/Window.qml");
         QObject *root = engine->rootObjects().first();
@@ -74,6 +75,7 @@ namespace Widget
         QObject::connect(root, SIGNAL(nameModified(QString)), this, SLOT(onNameChanged(QString)));
         QObject::connect(root, SIGNAL(faviconModified(QString)), this, SLOT(onIconChanged(QString)));
         QObject::connect(root, SIGNAL(urlModified(QString)), this, SLOT(onUrlChanged(QString)));
+        QObject::connect(root, SIGNAL(mobileModeModified(bool)), this, SLOT(onMobileModeChanged(bool)));
     }
 
     void Quietus::onTrayMenuActivated(QSystemTrayIcon::ActivationReason reason) const
@@ -155,6 +157,12 @@ namespace Widget
     void Quietus::onUrlChanged(const QString &url) const
     {
         website->setUrl(url);
+        websitePersistence->updateWebsites();
+    }
+
+    void Quietus::onMobileModeChanged(bool isMobileMode) const
+    {
+        website->setMobileMode(isMobileMode);
         websitePersistence->updateWebsites();
     }
 } // namespace Widget

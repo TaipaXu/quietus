@@ -18,11 +18,13 @@ ApplicationWindow {
     required property string name
     required property string favicon
     required property string url
+    required property bool mobileMode
 
     signal home
     signal nameModified(string name)
     signal faviconModified(string url)
     signal urlModified(string url)
+    signal mobileModeModified(bool isMobileMode)
 
     ColumnLayout {
         width: parent.width
@@ -55,6 +57,7 @@ ApplicationWindow {
 
         sourceComponent: Browser {
             url: root.url
+            mobileMode: root.mobileMode
 
             onGoHome: {
                 browserLoader.active = false
@@ -78,6 +81,11 @@ ApplicationWindow {
             onUrlChanged: () => {
                 root.url = url
                 root.urlModified(url)
+            }
+
+            onMobileModeChanged: () => {
+                root.mobileMode = mobileMode
+                root.mobileModeModified(mobileMode)
             }
         }
     }

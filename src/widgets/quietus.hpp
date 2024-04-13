@@ -44,6 +44,7 @@ namespace Widget
         void onNameChanged(const QString &title) const;
         void onIconChanged(const QString &url);
         void onUrlChanged(const QString &url) const;
+        void onMobileModeChanged(bool isMobileMode) const;
 
     private:
         std::shared_ptr<Model::Website> website;
