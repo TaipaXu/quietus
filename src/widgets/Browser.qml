@@ -95,6 +95,31 @@ ColumnLayout {
         onIconChanged: {
             root.iconChanged(webview.icon)
         }
+
+        onLoadingChanged: (loadingInfo) => {
+            if (root.mobileMode && loadingInfo.status === WebEngineView.LoadSucceededStatus) {
+                const css = `
+                    html::-webkit-scrollbar {
+                        width: 5px;
+                    }
+                    html::-webkit-scrollbar-track {
+                        background: #f1f1f1;
+                    }
+                    html::-webkit-scrollbar-thumb {
+                        background: #888;
+                    }
+                    html::-webkit-scrollbar-thumb:hover {
+                        background: #555;
+                    }
+                `;
+                const js = `{
+                    const style = document.createElement('style');
+                    style.innerHTML = \`${css}\`;
+                    document.head.appendChild(style);
+                }`;
+                webview.runJavaScript(js);
+            }
+        }
     }
 
     WebEngineProfile {
