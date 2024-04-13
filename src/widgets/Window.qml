@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt.labs.platform
 import utils
+import qml
 
 ApplicationWindow {
     id: root
@@ -14,7 +15,6 @@ ApplicationWindow {
     x: 0
     y: 0
 
-    required property string id
     required property string name
     required property string favicon
     required property string url
@@ -28,8 +28,11 @@ ApplicationWindow {
 
     ColumnLayout {
         width: parent.width
+        height: parent.height
+        // spacing: 0
 
         Row {
+            id: header
             Layout.fillWidth: true
             padding: 10
 
@@ -48,6 +51,11 @@ ApplicationWindow {
                 }
             }
         }
+
+        FavoriteGroups {
+            Layout.fillWidth: true
+            Layout.preferredHeight: root.height - header.height
+        }
     }
 
     Loader {
@@ -56,6 +64,8 @@ ApplicationWindow {
         active: false
 
         sourceComponent: Browser {
+            name: root.name
+            favicon: root.favicon
             url: root.url
             mobileMode: root.mobileMode
 
@@ -109,6 +119,17 @@ ApplicationWindow {
             raise();
         } else {
             hide()
+        }
+    }
+
+    Connections {
+        target: EventBus
+
+        function onEventTriggered(eventName, data) {
+            if (eventName === "openUrl") {
+                root.url = data
+                browserLoader.active = true
+            }
         }
     }
 

@@ -13,16 +13,23 @@ set(SOURCES
         core.hpp
         core.cpp
 
+        links/favorite.hpp
+        links/favorite.cpp
+
         widgets/quietus.hpp
         widgets/quietus.cpp
 
         models/website.hpp
         models/website.cpp
+        models/favorite.hpp
+        models/favorite.cpp
 
         persistence/persistence.hpp
         persistence/persistence.cpp
         persistence/website.hpp
         persistence/website.cpp
+        persistence/favorite.hpp
+        persistence/favorite.cpp
 
         network/faviconManager.hpp
         network/faviconManager.cpp
@@ -48,10 +55,21 @@ target_link_libraries(${TARGET} PUBLIC
     Qt${WebEngineQuick}::WebEngineQuick
     ${CMAKE_THREAD_LIBS_INIT})
 
+set_source_files_properties(
+    widgets/EventBus.qml
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE
+)
+
 qt_add_qml_module(${TARGET}
     URI qml
     NO_RESOURCE_TARGET_PATH
     QML_FILES
         "widgets/Window.qml"
         "widgets/Browser.qml"
+        "widgets/FavoriteGroups.qml"
+        "widgets/FavoriteGroup.qml"
+        "widgets/Favorite.qml"
+        "widgets/AddEditFavoriteGroupDialog.qml"
+        "widgets/FavoriteDialog.qml"
+        "widgets/EventBus.qml"
 )

@@ -1,10 +1,12 @@
 #include "./quietus.hpp"
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QMenu>
 #include <QIcon>
-#include "persistence/website.hpp"
 #include "models/website.hpp"
+#include "persistence/website.hpp"
+#include "links/favorite.hpp"
 #include "network/faviconManager.hpp"
 
 namespace Widget
@@ -62,6 +64,7 @@ namespace Widget
     void Quietus::createEngine()
     {
         engine = new QQmlApplicationEngine();
+        engine->rootContext()->setContextProperty("FavoriteLink", Link::Favorite::getInstance());
         engine->setInitialProperties({
             {"id", website->getId()},
             {"name", website->getName()},

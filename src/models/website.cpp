@@ -3,22 +3,18 @@
 
 namespace Model
 {
-    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode)
-        : id{id}, name(name), favicon(favicon), url(url), mobileMode(mobileMode)
+    Website::Website(QObject *parent)
+        : QObject(parent), mobileMode(false)
     {
     }
 
-    Website::Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode)
-        : Website(Util::Common::getUuid(), name, favicon, url, mobileMode)
+    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode, QObject *parent)
+        : QObject(parent), id{id}, name(name), favicon(favicon), url(url), mobileMode(mobileMode)
     {
     }
 
-    Website::Website()
-        : Website("", "", "", true)
-    {
-    }
-
-    Website::~Website()
+    Website::Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode, QObject *parent)
+        : Website(Util::Common::getUuid(), name, favicon, url, mobileMode, parent)
     {
     }
 
@@ -27,6 +23,8 @@ namespace Model
         if (this->name != name)
         {
             this->name = name;
+
+            emit nameChanged();
         }
     }
 
@@ -35,6 +33,8 @@ namespace Model
         if (this->favicon != favicon)
         {
             this->favicon = favicon;
+
+            emit faviconChanged();
         }
     }
 
@@ -43,6 +43,8 @@ namespace Model
         if (this->url != url)
         {
             this->url = url;
+
+            emit urlChanged();
         }
     }
 
@@ -51,6 +53,8 @@ namespace Model
         if (this->mobileMode != mobileMode)
         {
             this->mobileMode = mobileMode;
+
+            emit mobileModeChanged();
         }
     }
 
@@ -59,5 +63,9 @@ namespace Model
         name.clear();
         favicon.clear();
         url.clear();
+
+        emit nameChanged();
+        emit faviconChanged();
+        emit urlChanged();
     }
 } // namespace Model

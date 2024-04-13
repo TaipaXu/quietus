@@ -7,6 +7,8 @@ ColumnLayout {
     id: root
     spacing: 0
 
+    required property string name
+    required property string favicon
     required property string url
     required property bool mobileMode
 
@@ -71,6 +73,22 @@ ColumnLayout {
                 }
             }
 
+            ToolButton {
+                id: favoriteButton
+                width: 50
+                height: 50
+                icon.source: "qrc:/images/unfavorite"
+
+                onClicked: {
+                    if (FavoriteLink.isFavoriteWebsite(root.url)) {
+                        FavoriteLink.removeFavoriteWebsite(root.url);
+                    } else {
+                        favoriteDialogLoader.sourceComponent = favoriteDialogComponent
+                        favoriteDialogLoader.active = true
+                    }
+                }
+            }
+
             Item {
                 Layout.fillWidth: true
             }
@@ -85,6 +103,7 @@ ColumnLayout {
         profile: webProfile
 
         onTitleChanged: {
+            root.name = webview.title
             root.titleChanged(webview.title)
         }
 
@@ -93,6 +112,7 @@ ColumnLayout {
         }
 
         onIconChanged: {
+            root.favicon = webview.icon
             root.iconChanged(webview.icon)
         }
 
@@ -125,5 +145,48 @@ ColumnLayout {
     WebEngineProfile {
         id: webProfile
         httpUserAgent: root.mobileMode ? root.mobileUserAgent : root.desktopUserAgent
+    }
+
+    Component {
+        id: favoriteDialogComponent
+
+        FavoriteDialog {
+            id: favoriteDialog
+            name: root.name
+            favicon: root.favicon
+            url: root.url
+
+            onAccepted: (groupId, name, favicon, url) => {
+                FavoriteLink.addFavoriteWebsite(groupId, name, favicon, url);
+            }
+
+            onClosing: {
+                favoriteDialogLoader.sourceComponent = undefined
+            }
+        }
+    }
+
+    Loader {
+        id: favoriteDialogLoader
+    }
+
+    Connections {
+        target: FavoriteLink
+
+        function onFavoriteGroupsChanged() {
+            if (FavoriteLink.isFavoriteWebsite(root.url)) {
+                favoriteButton.icon.source = "qrc:/images/favorite"
+            } else {
+                favoriteButton.icon.source = "qrc:/images/unfavorite"
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        if (FavoriteLink.isFavoriteWebsite(root.url)) {
+            favoriteButton.icon.source = "qrc:/images/favorite"
+        } else {
+            favoriteButton.icon.source = "qrc:/images/unfavorite"
+        }
     }
 }

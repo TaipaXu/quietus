@@ -1,13 +1,19 @@
 #include "./core.hpp"
 #include <QQmlEngine>
+#include <QJSEngine>
 #include "widgets/quietus.hpp"
-#include "persistence/website.hpp"
 #include "models/website.hpp"
+#include "models/favorite.hpp"
+#include "links/favorite.hpp"
+#include "persistence/website.hpp"
 #include "utils/common.hpp"
 
 Core::Core()
 {
     qmlRegisterType<Util::Common>("utils", 1, 0, "Utils");
+    qmlRegisterType<Model::Website>("model.website", 1, 0, "Website");
+    qmlRegisterType<Model::FavoriteGroup>("model.favoriteGroup", 1, 0, "FavoriteGroup");
+    QJSEngine::setObjectOwnership(Link::Favorite::getInstance(), QQmlEngine::CppOwnership);
 
     websitePersistence = Persistence::Website::getInstance();
     const std::list<std::shared_ptr<Model::Website>> websites = websitePersistence->getWebsites();

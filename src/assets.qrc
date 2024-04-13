@@ -1,11 +1,20 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="icon">./assets/images/icon.png</file>
+        <file alias="website">./assets/images/website.svg</file>
         <file alias="home">./assets/images/home.svg</file>
         <file alias="backward">./assets/images/left.svg</file>
         <file alias="forward">./assets/images/right.svg</file>
         <file alias="refresh">./assets/images/refresh.svg</file>
         <file alias="desktop">./assets/images/desktop.svg</file>
         <file alias="mobile">./assets/images/mobile.svg</file>
+        <file alias="add">./assets/images/add.svg</file>
+        <file alias="remove">./assets/images/remove.svg</file>
+        <file alias="edit">./assets/images/edit.svg</file>
+        <file alias="favorite">./assets/images/favorite.svg</file>
+        <file alias="unfavorite">./assets/images/unfavorite.svg</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file alias="favorites">./assets/data/favorites.json</file>
     </qresource>
 </RCC>
