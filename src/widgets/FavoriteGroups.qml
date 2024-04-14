@@ -12,6 +12,7 @@ Flickable {
     Pane {
         width: parent.width
         topPadding: 0
+        background: null
 
         ColumnLayout {
             width: parent.width

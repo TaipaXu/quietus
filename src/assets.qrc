@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="icon">./assets/images/icon.png</file>
+        <file alias="bg">./assets/images/bg.jpg</file>
         <file alias="website">./assets/images/website.svg</file>
         <file alias="home">./assets/images/home.svg</file>
         <file alias="backward">./assets/images/left.svg</file>

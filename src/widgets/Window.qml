@@ -26,10 +26,17 @@ ApplicationWindow {
     signal urlModified(string url)
     signal mobileModeModified(bool isMobileMode)
 
+    Image {
+        id: backgroundImage
+        anchors.fill: parent
+        source: "qrc:/images/bg"
+        fillMode: Image.PreserveAspectCrop
+    }
+
+
     ColumnLayout {
         width: parent.width
         height: parent.height
-        // spacing: 0
 
         Row {
             id: header
@@ -39,6 +46,13 @@ ApplicationWindow {
             TextField {
                 id: locationInput
                 width: parent.width - parent.padding * 2
+                background: Rectangle {
+                    color: white
+                    border.color: "gray"
+                    border.width: 1
+                    radius: 5
+                    opacity: 0.2
+                }
 
                 placeholderText: qsTr("Location")
 
