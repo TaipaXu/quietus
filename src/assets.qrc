@@ -14,6 +14,7 @@
         <file alias="edit">./assets/images/edit.svg</file>
         <file alias="favorite">./assets/images/favorite.svg</file>
         <file alias="unfavorite">./assets/images/unfavorite.svg</file>
+        <file alias="loading">./assets/images/loading.gif</file>
     </qresource>
     <qresource prefix="/data">
         <file alias="favorites">./assets/data/favorites.json</file>

@@ -56,6 +56,15 @@ ColumnLayout {
                 height: 50
                 icon.source: "qrc:/images/refresh"
                 onClicked: webview.reload()
+
+                AnimatedImage {
+                    anchors.centerIn: parent
+                    width: 14
+                    height: 14
+                    visible: webview.loading
+                    source: "qrc:/images/loading"
+                    playing: webview.loading
+                }
             }
 
             ToolButton {
