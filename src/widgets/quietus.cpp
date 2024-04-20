@@ -66,7 +66,6 @@ namespace Widget
         engine = new QQmlApplicationEngine();
         engine->rootContext()->setContextProperty("FavoriteLink", Link::Favorite::getInstance());
         engine->setInitialProperties({
-            {"id", website->getId()},
             {"name", website->getName()},
             {"favicon", website->getFavicon()},
             {"url", website->getUrl()},

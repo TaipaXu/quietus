@@ -4,12 +4,13 @@ import QtQuick.Layouts
 
 Flickable {
     flickableDirection: Flickable.VerticalFlick
-    contentHeight: contentItem.childrenRect.height
+    contentHeight: content.height
     topMargin: 0
     clip: true
     ScrollBar.vertical: ScrollBar {}
 
     Pane {
+        id: content
         width: parent.width
         topPadding: 0
         background: null
@@ -22,9 +23,16 @@ Flickable {
                 Layout.fillWidth: true
 
                 Label {
+                    Layout.fillWidth: true
                     text: qsTr("Favorites")
                     font.bold: true
                     font.pointSize: 20
+
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                    }
                 }
 
                 Item {
@@ -43,14 +51,6 @@ Flickable {
                         addEditFavoriteGroupDialogLoader.sourceComponent = addEditFavoriteGroupDialogComponent
                         addEditFavoriteGroupDialogLoader.active = true
                     }
-                }
-
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    anchors.rightMargin: addButton.width
-                    propagateComposedEvents: true
-                    hoverEnabled: true
                 }
             }
 

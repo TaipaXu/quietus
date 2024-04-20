@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt.labs.platform
 import model.website as Model
-import qml
 
 Item {
     id: root
@@ -27,13 +26,13 @@ Item {
                 source: "qrc:/images/website"
                 Layout.preferredWidth: 20
                 Layout.preferredHeight: 20
+                Layout.alignment: Qt.AlignHCenter
                 fillMode: Image.PreserveAspectFit
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 Layout.fillWidth: true
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 text: root.website.name
                 font.pixelSize: 10
                 elide: Text.ElideRight

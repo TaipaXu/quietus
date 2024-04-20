@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt.labs.platform
 import utils
-import qml
 
 ApplicationWindow {
     id: root
@@ -47,7 +46,7 @@ ApplicationWindow {
                 id: locationInput
                 width: parent.width - parent.padding * 2
                 background: Rectangle {
-                    color: white
+                    color: "white"
                     border.color: "gray"
                     border.width: 1
                     radius: 5

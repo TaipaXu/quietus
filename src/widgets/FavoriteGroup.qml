@@ -16,12 +16,15 @@ ColumnLayout {
         anchors.bottomMargin: 10
 
         Label {
+            Layout.fillWidth: true
             text: favoriteGroup.name
             font.pixelSize: 17
-        }
 
-        Item {
-            Layout.fillWidth: true
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+            }
         }
 
         ToolButton {
@@ -64,14 +67,6 @@ ColumnLayout {
                 favoriteDialogLoader.sourceComponent = favoriteDialogComponent
                 favoriteDialogLoader.active = true
             }
-        }
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            anchors.rightMargin: addButton.width + removeButton.width + editButton.width + parent.spacing * 3
-            propagateComposedEvents: true
-            hoverEnabled: true
         }
     }
 
