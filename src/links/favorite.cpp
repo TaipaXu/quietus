@@ -1,4 +1,5 @@
 #include "./favorite.hpp"
+#include <algorithm>
 #include "persistence/favorite.hpp"
 #include "models/website.hpp"
 
@@ -45,35 +46,35 @@ namespace Link
 
     void Favorite::editFavoriteGroup(const QString &groupId, const QString &name)
     {
-        for (auto &&favoriteGroup : favoriteGroups)
+        auto it = std::find_if(favoriteGroups.begin(), favoriteGroups.end(),
+                               [&groupId](const auto &favoriteGroup) {
+                                   return favoriteGroup->getId() == groupId;
+                               });
+
+        if (it != favoriteGroups.end())
         {
-            if (favoriteGroup->getId() == groupId)
-            {
-                favoriteGroup->setName(name);
-                Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
-                favoritePersistence->saveFavoriteGroups(favoriteGroups);
+            (*it)->setName(name);
+            Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
+            favoritePersistence->saveFavoriteGroups(favoriteGroups);
 
-                emit favoriteGroupsChanged();
-
-                return;
-            }
+            emit favoriteGroupsChanged();
         }
     }
 
     void Favorite::removeFavoriteGroup(const QString &groupId)
     {
-        for (int i = 0; i < favoriteGroups.size(); i++)
+        auto it = std::remove_if(favoriteGroups.begin(), favoriteGroups.end(),
+                                 [&groupId](const auto &group) {
+                                     return group->getId() == groupId;
+                                 });
+
+        if (it != favoriteGroups.end())
         {
-            if (favoriteGroups[i]->getId() == groupId)
-            {
-                favoriteGroups.removeAt(i);
-                Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
-                favoritePersistence->saveFavoriteGroups(favoriteGroups);
+            favoriteGroups.erase(it, favoriteGroups.end());
+            Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
+            favoritePersistence->saveFavoriteGroups(favoriteGroups);
 
-                emit favoriteGroupsChanged();
-
-                return;
-            }
+            emit favoriteGroupsChanged();
         }
     }
 
@@ -90,59 +91,76 @@ namespace Link
             return;
         }
 
-        Model::FavoriteGroup *group = nullptr;
-        for (auto &&favoriteGroup : favoriteGroups)
-        {
-            if (favoriteGroup->getId() == groupId)
-            {
-                group = favoriteGroup;
-                break;
-            }
-        }
+        auto it = std::find_if(favoriteGroups.begin(), favoriteGroups.end(),
+                               [&groupId](const auto &group) {
+                                   return group->getId() == groupId;
+                               });
 
-        if (group != nullptr)
+        if (it != favoriteGroups.end())
         {
-            Model::Website *favorite = new Model::Website(name, favicon, url, group);
-            group->addWebsite(favorite);
+            Model::Website *favorite = new Model::Website(name, favicon, url, *it);
+            (*it)->addWebsite(favorite);
 
             Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
             favoritePersistence->saveFavoriteGroups(favoriteGroups);
-        }
 
-        emit favoriteGroupsChanged();
+            emit favoriteGroupsChanged();
+        }
     }
 
     void Favorite::editFavoriteWebsite(const QString &websiteId, const QString &groupId, const QString &name, const QString &favicon, const QString &url)
     {
+        Model::Website *foundWebsite = nullptr;
+        Model::FavoriteGroup *originalGroup = nullptr;
+        Model::FavoriteGroup *newGroup = nullptr;
+
         for (auto &&favoriteGroup : favoriteGroups)
         {
+            auto it = std::find_if(favoriteGroup->getWebsites().begin(), favoriteGroup->getWebsites().end(),
+                                   [&websiteId](const auto &website) {
+                                       return website->getId() == websiteId;
+                                   });
 
-            for (auto &&favorite : favoriteGroup->getWebsites())
+            if (it != favoriteGroup->getWebsites().end())
             {
-                if (favorite->getId() == websiteId)
+                foundWebsite = *it;
+                originalGroup = favoriteGroup;
+                break;
+            }
+        }
+
+        if (foundWebsite && originalGroup)
+        {
+            foundWebsite->setName(name);
+            foundWebsite->setFavicon(favicon);
+            foundWebsite->setUrl(url);
+
+            if (originalGroup->getId() != groupId)
+            {
+                auto it = std::find_if(favoriteGroups.begin(), favoriteGroups.end(),
+                                       [&groupId](const auto &group) {
+                                           return group->getId() == groupId;
+                                       });
+                if (it != favoriteGroups.end())
                 {
-                    favorite->setName(name);
-                    favorite->setFavicon(favicon);
-                    favorite->setUrl(url);
-
-                    favoriteGroup->takeWebsite(favorite);
-                    for (auto &&group : favoriteGroups)
-                    {
-                        if (group->getId() == groupId)
-                        {
-                            group->addWebsite(favorite);
-
-                            Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
-                            favoritePersistence->saveFavoriteGroups(favoriteGroups);
-
-                            emit favoriteGroupsChanged();
-
-                            return;
-                        }
-                    }
-                    break;
+                    newGroup = *it;
                 }
             }
+            else
+            {
+                newGroup = originalGroup;
+            }
+
+            if (newGroup && newGroup != originalGroup)
+            {
+                originalGroup->takeWebsite(foundWebsite);
+                newGroup->addWebsite(foundWebsite);
+            }
+
+            Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
+            favoritePersistence->saveFavoriteGroups(favoriteGroups);
+
+            emit favoriteGroupsChanged();
         }
     }
 
@@ -150,34 +168,30 @@ namespace Link
     {
         for (auto &&favoriteGroup : favoriteGroups)
         {
-            for (auto &&favorite : favoriteGroup->getWebsites())
+            auto it = std::find_if(favoriteGroup->getWebsites().begin(), favoriteGroup->getWebsites().end(),
+                                   [&url](const auto &website) {
+                                       return website->getUrl() == url;
+                                   });
+
+            if (it != favoriteGroup->getWebsites().end())
             {
-                if (favorite->getUrl() == url)
-                {
-                    favoriteGroup->removeWebsite(favorite);
-                    Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
-                    favoritePersistence->saveFavoriteGroups(favoriteGroups);
-                    return;
-                }
+                favoriteGroup->removeWebsite(*it);
+                Persistence::Favorite *favoritePersistence = Persistence::Favorite::getInstance();
+                favoritePersistence->saveFavoriteGroups(favoriteGroups);
+                emit favoriteGroupsChanged();
+                return;
             }
         }
-
-        emit favoriteGroupsChanged();
     }
 
     bool Favorite::isFavoriteWebsite(const QString &url) const
     {
-        for (auto &&favoriteGroup : favoriteGroups)
-        {
-            for (auto &&favorite : favoriteGroup->getWebsites())
-            {
-                if (favorite->getUrl() == url)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return std::any_of(favoriteGroups.begin(), favoriteGroups.end(),
+                           [&url](const auto &group) {
+                               return std::any_of(group->getWebsites().begin(), group->getWebsites().end(),
+                                                  [&url](const auto &website) {
+                                                      return website->getUrl() == url;
+                                                  });
+                           });
     }
 } // namespace Link
