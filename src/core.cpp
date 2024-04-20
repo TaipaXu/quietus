@@ -13,6 +13,7 @@ Core::Core()
     qmlRegisterType<Util::Common>("utils", 1, 0, "Utils");
     qmlRegisterType<Model::Website>("model.website", 1, 0, "Website");
     qmlRegisterType<Model::FavoriteGroup>("model.favoriteGroup", 1, 0, "FavoriteGroup");
+    qmlRegisterSingletonType(QUrl("qrc:/widgets/EventBus.qml"), "app.eventbus", 1, 0, "EventBus");
     QJSEngine::setObjectOwnership(Link::Favorite::getInstance(), QQmlEngine::CppOwnership);
 
     websitePersistence = Persistence::Website::getInstance();

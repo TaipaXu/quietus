@@ -55,11 +55,6 @@ target_link_libraries(${TARGET} PUBLIC
     Qt${WebEngineQuick}::WebEngineQuick
     ${CMAKE_THREAD_LIBS_INIT})
 
-set_source_files_properties(
-    widgets/EventBus.qml
-    PROPERTIES QT_QML_SINGLETON_TYPE TRUE
-)
-
 qt_add_qml_module(${TARGET}
     URI qml
     NO_RESOURCE_TARGET_PATH

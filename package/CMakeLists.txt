@@ -16,17 +16,9 @@ if(UNIX AND NOT APPLE)
         RUNTIME DESTINATION bin
     )
 
-    install(DIRECTORY ${PROJECT_BINARY_DIR}/src/qml/
-        DESTINATION share/quietus/qml
-    )
-
     install(FILES debian/quietus.png DESTINATION share/icons/hicolor/48x48/apps)
 
     install(FILES ./debian/quietus.desktop DESTINATION share/applications)
 endif()
-
-install(DIRECTORY ${PROJECT_BINARY_DIR}/src/qml/
-    DESTINATION share/quietus/qml
-)
 
 include(CPack)
