@@ -45,6 +45,12 @@ add_executable(
     ${SOURCES}
 )
 
+if(UNIX AND NOT APPLE)
+add_custom_command(TARGET ${TARGET} POST_BUILD
+        COMMAND strip $<TARGET_FILE:quietus>
+        COMMENT "Stripping executable $<TARGET_FILE:quietus>")
+endif()
+
 target_link_libraries(${TARGET} PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Widgets
