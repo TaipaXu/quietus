@@ -154,6 +154,9 @@ ColumnLayout {
     WebEngineProfile {
         id: webProfile
         httpUserAgent: root.mobileMode ? root.mobileUserAgent : root.desktopUserAgent
+        offTheRecord: false
+        persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+        storageName: "defaultStorage"
     }
 
     Component {
