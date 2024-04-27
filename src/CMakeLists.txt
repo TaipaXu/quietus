@@ -3,6 +3,9 @@ find_package(Threads)
 
 configure_file(./appConfig.hpp.in ./appConfig.hpp)
 
+set(TS_FILES i18n/app_zh_CN.ts)
+qt6_create_translation(TRANS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/widgets ${TS_FILES})
+
 if(APPLE)
     set(CMAKE_MACOSX_BUNDLE ON)
 endif()
@@ -38,6 +41,8 @@ set(SOURCES
         utils/common.cpp
 
         assets.qrc
+
+        ${TRANS_FILE}
 )
 
 add_executable(

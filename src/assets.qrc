@@ -1,4 +1,7 @@
 <RCC>
+    <qresource prefix="/i18n">
+        <file alias="zh_CN">./i18n/app_zh_CN.qm</file>
+    </qresource>
     <qresource prefix="/images">
         <file alias="icon">./assets/images/icon.png</file>
         <file alias="bg">./assets/images/bg.jpg</file>

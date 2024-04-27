@@ -1,4 +1,6 @@
 #include "./core.hpp"
+#include <QGuiApplication>
+#include <QTranslator>
 #include <QQmlEngine>
 #include <QJSEngine>
 #include "widgets/quietus.hpp"
@@ -10,6 +12,14 @@
 
 Core::Core()
 {
+    QTranslator *translator = new QTranslator(this);
+    QLocale locale;
+    if (locale.language() == QLocale::Chinese)
+    {
+        std::ignore = translator->load(":/i18n/zh_CN");
+    }
+    qApp->installTranslator(translator);
+
     qmlRegisterType<Util::Common>("utils", 1, 0, "Utils");
     qmlRegisterType<Model::Website>("model.website", 1, 0, "Website");
     qmlRegisterType<Model::FavoriteGroup>("model.favoriteGroup", 1, 0, "FavoriteGroup");
