@@ -73,8 +73,17 @@ namespace Persistence
             const QString favicon = websiteObject["favicon"].toString();
             const QString url = websiteObject["url"].toString();
             const bool isMobileMode = websiteObject["mobileMode"].toBool(true);
-
-            const std::shared_ptr<Model::Website> websiteModel = std::make_shared<Model::Website>(id, name, favicon, url, isMobileMode);
+            std::unique_ptr<Model::SizeAndPosition> sizeAndPosition = nullptr;
+            if (websiteObject.contains("sizeAndPosition"))
+            {
+                const QJsonObject sizeAndPositionObject = websiteObject["sizeAndPosition"].toObject();
+                sizeAndPosition = std::make_unique<Model::SizeAndPosition>(
+                    sizeAndPositionObject["width"].toInt(),
+                    sizeAndPositionObject["height"].toInt(),
+                    sizeAndPositionObject["x"].toInt(),
+                    sizeAndPositionObject["y"].toInt());
+            }
+            const std::shared_ptr<Model::Website> websiteModel = std::make_shared<Model::Website>(id, name, favicon, url, isMobileMode, std::move(sizeAndPosition));
             websites.push_back(websiteModel);
         }
     }
@@ -97,6 +106,15 @@ namespace Persistence
             websiteObject["favicon"] = website->getFavicon();
             websiteObject["url"] = website->getUrl();
             websiteObject["mobileMode"] = website->isMobileMode();
+            if (website->hasSizeAndPosition())
+            {
+                QJsonObject sizeAndPositionObject;
+                sizeAndPositionObject["width"] = website->getWidth();
+                sizeAndPositionObject["height"] = website->getHeight();
+                sizeAndPositionObject["x"] = website->getX();
+                sizeAndPositionObject["y"] = website->getY();
+                websiteObject["sizeAndPosition"] = sizeAndPositionObject;
+            }
 
             websitesArray.append(websiteObject);
         }

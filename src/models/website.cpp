@@ -8,13 +8,13 @@ namespace Model
     {
     }
 
-    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode, QObject *parent)
-        : QObject(parent), id{id}, name(name), favicon(favicon), url(url), mobileMode(mobileMode)
+    Website::Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode, std::unique_ptr<SizeAndPosition> &&sizeAndPosition, QObject *parent)
+        : QObject(parent), id{id}, name(name), favicon(favicon), url(url), mobileMode(mobileMode), sizeAndPosition(std::move(sizeAndPosition))
     {
     }
 
-    Website::Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode, QObject *parent)
-        : Website(Util::Common::getUuid(), name, favicon, url, mobileMode, parent)
+    Website::Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode, std::unique_ptr<SizeAndPosition> &&sizeAndPosition, QObject *parent)
+        : Website(Util::Common::getUuid(), name, favicon, url, mobileMode, std::move(sizeAndPosition), parent)
     {
     }
 
@@ -55,6 +55,21 @@ namespace Model
             this->mobileMode = mobileMode;
 
             emit mobileModeChanged();
+        }
+    }
+
+    void Website::setSizeAndPosition(int width, int height, int x, int y)
+    {
+        if (sizeAndPosition)
+        {
+            sizeAndPosition->width = width;
+            sizeAndPosition->height = height;
+            sizeAndPosition->x = x;
+            sizeAndPosition->y = y;
+        }
+        else
+        {
+            sizeAndPosition = std::move(std::make_unique<SizeAndPosition>(width, height, x, y));
         }
     }
 

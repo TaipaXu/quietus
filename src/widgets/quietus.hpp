@@ -36,9 +36,13 @@ namespace Widget
     private:
         void createTray();
         void createEngine();
+        void setWidgetPosition() const;
+        void setWidgetSizeAndPositionWidthStoredData() const;
 
     private slots:
         void onTrayMenuActivated(QSystemTrayIcon::ActivationReason reason) const;
+        void onAdjustWindow() const;
+        void onAdjustDone(int width, int height, int x, int y) const;
         void onFaviconReady(const QString &url, const QString &fileName) const;
         void onHome();
         void onNameChanged(const QString &title) const;

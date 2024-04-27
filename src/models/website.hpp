@@ -1,10 +1,19 @@
 #pragma once
 
+#include <memory>
 #include <QObject>
 #include <QString>
 
 namespace Model
 {
+    struct SizeAndPosition
+    {
+        int width;
+        int height;
+        int x;
+        int y;
+    };
+
     class Website : public QObject
     {
         Q_OBJECT
@@ -17,8 +26,8 @@ namespace Model
 
     public:
         Website(QObject *parent = nullptr);
-        Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode = true, QObject *parent = nullptr);
-        Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode = true, QObject *parent = nullptr);
+        Website(const QString &id, const QString &name, const QString &favicon, const QString &url, bool mobileMode = true, std::unique_ptr<SizeAndPosition> &&sizeAndPosition = nullptr, QObject *parent = nullptr);
+        Website(const QString &name, const QString &favicon, const QString &url, bool mobileMode = true, std::unique_ptr<SizeAndPosition> &&sizeAndPosition = nullptr, QObject *parent = nullptr);
         ~Website() = default;
 
         const QString &getId() const;
@@ -30,6 +39,12 @@ namespace Model
         void setUrl(const QString &url);
         bool isMobileMode() const;
         void setMobileMode(bool mobileMode);
+        bool hasSizeAndPosition() const;
+        void setSizeAndPosition(int width, int height, int x, int y);
+        int getWidth() const;
+        int getHeight() const;
+        int getX() const;
+        int getY() const;
         void clear();
 
     signals:
@@ -44,6 +59,7 @@ namespace Model
         QString favicon;
         QString url;
         bool mobileMode;
+        std::unique_ptr<SizeAndPosition> sizeAndPosition;
     };
 
     inline const QString &Website::getId() const
@@ -69,5 +85,30 @@ namespace Model
     inline bool Website::isMobileMode() const
     {
         return mobileMode;
+    }
+
+    inline bool Website::hasSizeAndPosition() const
+    {
+        return sizeAndPosition != nullptr;
+    }
+
+    inline int Website::getWidth() const
+    {
+        return sizeAndPosition ? sizeAndPosition->width : 0;
+    }
+
+    inline int Website::getHeight() const
+    {
+        return sizeAndPosition ? sizeAndPosition->height : 0;
+    }
+
+    inline int Website::getX() const
+    {
+        return sizeAndPosition ? sizeAndPosition->x : 0;
+    }
+
+    inline int Website::getY() const
+    {
+        return sizeAndPosition ? sizeAndPosition->y : 0;
     }
 } // namespace Model

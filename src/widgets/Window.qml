@@ -18,12 +18,14 @@ ApplicationWindow {
     required property string favicon
     required property string url
     required property bool mobileMode
+    property bool adjusting
 
     signal home
     signal nameModified(string name)
     signal faviconModified(string url)
     signal urlModified(string url)
     signal mobileModeModified(bool isMobileMode)
+    signal adjustDone(int width, int height, int x, int y)
 
     Image {
         id: backgroundImage
@@ -113,6 +115,15 @@ ApplicationWindow {
         }
     }
 
+    AdjustingMask {
+        visible: root.adjusting
+
+        onEndAdjust: {
+            root.adjusting = false
+            root.adjustDone(root.width, root.height, root.x, root.y)
+        }
+    }
+
     Utils {
         id: utils
     }
@@ -132,6 +143,14 @@ ApplicationWindow {
             raise();
         } else {
             hide()
+        }
+    }
+
+    onAdjustingChanged: {
+        if (root.adjusting) {
+            root.flags = Qt.WindowStaysOnTopHint;
+        } else {
+            root.flags = Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint;
         }
     }
 

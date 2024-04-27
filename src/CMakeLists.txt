@@ -77,5 +77,6 @@ qt_add_qml_module(${TARGET}
         "widgets/Favorite.qml"
         "widgets/AddEditFavoriteGroupDialog.qml"
         "widgets/FavoriteDialog.qml"
+        "widgets/AdjustingMask.qml"
         "widgets/EventBus.qml"
 )

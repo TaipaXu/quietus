@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QList>
-#include <QtDebug>
 #include "models/favorite.hpp"
 
 namespace Link

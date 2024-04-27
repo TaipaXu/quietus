@@ -12,6 +12,7 @@
         <file alias="refresh">./assets/images/refresh.svg</file>
         <file alias="desktop">./assets/images/desktop.svg</file>
         <file alias="mobile">./assets/images/mobile.svg</file>
+        <file alias="resize">./assets/images/resize.svg</file>
         <file alias="add">./assets/images/add.svg</file>
         <file alias="remove">./assets/images/remove.svg</file>
         <file alias="edit">./assets/images/edit.svg</file>

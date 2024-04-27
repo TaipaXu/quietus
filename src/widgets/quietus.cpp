@@ -1,6 +1,9 @@
 #include "./quietus.hpp"
 #include <QApplication>
 #include <QDesktopServices>
+#ifndef Q_OS_MACOS
+#include <QScreen>
+#endif
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QMenu>
@@ -51,6 +54,10 @@ namespace Widget
         connect(removeMeAction, &QAction::triggered, this, &Quietus::removeInstance);
         trayMenu->addAction(removeMeAction);
 
+        QAction *adjustWindowAction = new QAction(tr("Adjust window"), this);
+        connect(adjustWindowAction, &QAction::triggered, this, &Quietus::onAdjustWindow);
+        trayMenu->addAction(adjustWindowAction);
+
         trayMenu->addSeparator();
 
         QMenu *aboutMenu = new QMenu(tr("About"));
@@ -94,12 +101,35 @@ namespace Widget
             {"mobileMode", website->isMobileMode()},
         });
         engine->load("qrc:/widgets/Window.qml");
+        if (website->hasSizeAndPosition())
+        {
+            setWidgetSizeAndPositionWidthStoredData();
+        }
         QObject *root = engine->rootObjects().first();
         QObject::connect(root, SIGNAL(home()), this, SLOT(onHome()));
         QObject::connect(root, SIGNAL(nameModified(QString)), this, SLOT(onNameChanged(QString)));
         QObject::connect(root, SIGNAL(faviconModified(QString)), this, SLOT(onIconChanged(QString)));
         QObject::connect(root, SIGNAL(urlModified(QString)), this, SLOT(onUrlChanged(QString)));
         QObject::connect(root, SIGNAL(mobileModeModified(bool)), this, SLOT(onMobileModeChanged(bool)));
+        QObject::connect(root, SIGNAL(adjustDone(int, int, int, int)), this, SLOT(onAdjustDone(int, int, int, int)));
+    }
+
+    void Quietus::setWidgetPosition() const
+    {
+        engine->rootObjects().first()->setProperty("x", QCursor::pos().x() - 150);
+#ifdef Q_OS_MACOS
+        engine->rootObjects().first()->setProperty("y", 0);
+#else
+        engine->rootObjects().first()->setProperty("y", QApplication::primaryScreen()->size().height() - engine->rootObjects().first()->property("height").toInt());
+#endif
+    }
+
+    void Quietus::setWidgetSizeAndPositionWidthStoredData() const
+    {
+        engine->rootObjects().first()->setProperty("width", website->getWidth());
+        engine->rootObjects().first()->setProperty("height", website->getHeight());
+        engine->rootObjects().first()->setProperty("x", website->getX());
+        engine->rootObjects().first()->setProperty("y", website->getY());
     }
 
     void Quietus::onTrayMenuActivated(QSystemTrayIcon::ActivationReason reason) const
@@ -114,8 +144,14 @@ namespace Widget
             }
             else
             {
-                engine->rootObjects().first()->setProperty("x", QCursor::pos().x() - 150);
-                engine->rootObjects().first()->setProperty("y", QCursor::pos().y() - 500);
+                if (website->hasSizeAndPosition())
+                {
+                    setWidgetSizeAndPositionWidthStoredData();
+                }
+                else
+                {
+                    setWidgetPosition();
+                }
                 engine->rootObjects().first()->setProperty("visible", true);
             }
             break;
@@ -143,6 +179,26 @@ namespace Widget
         default:
             break;
         }
+    }
+
+    void Quietus::onAdjustWindow() const
+    {
+        if (website->hasSizeAndPosition())
+        {
+            setWidgetSizeAndPositionWidthStoredData();
+        }
+        else
+        {
+            setWidgetPosition();
+        }
+        engine->rootObjects().first()->setProperty("visible", true);
+        engine->rootObjects().first()->setProperty("adjusting", true);
+    }
+
+    void Quietus::onAdjustDone(int width, int height, int x, int y) const
+    {
+        website->setSizeAndPosition(width, height, x, y);
+        websitePersistence->updateWebsites();
     }
 
     void Quietus::onFaviconReady(const QString &url, const QString &fileName) const

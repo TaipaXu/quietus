@@ -89,42 +89,47 @@
 <context>
     <name>Widget::Quietus</name>
     <message>
-        <location filename="../widgets/quietus.cpp" line="40"/>
+        <location filename="../widgets/quietus.cpp" line="43"/>
         <source>Quietus</source>
         <translation>悄声细语</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="46"/>
+        <location filename="../widgets/quietus.cpp" line="49"/>
         <source>New one</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="50"/>
+        <location filename="../widgets/quietus.cpp" line="53"/>
         <source>Remove me</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="56"/>
+        <location filename="../widgets/quietus.cpp" line="57"/>
+        <source>Adjust window</source>
+        <translation>调整窗口</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="63"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="57"/>
+        <location filename="../widgets/quietus.cpp" line="64"/>
         <source>About me</source>
         <translation>关于我</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="62"/>
+        <location filename="../widgets/quietus.cpp" line="69"/>
         <source>Project domain</source>
         <translation>项目主页</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="67"/>
+        <location filename="../widgets/quietus.cpp" line="74"/>
         <source>Bug report</source>
         <translation>错误报告</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="77"/>
+        <location filename="../widgets/quietus.cpp" line="84"/>
         <source>E&amp;xit</source>
         <translation>结(E&amp;)束</translation>
     </message>
@@ -137,7 +142,7 @@
         <translation>悄声细语</translation>
     </message>
     <message>
-        <location filename="../widgets/Window.qml" line="56"/>
+        <location filename="../widgets/Window.qml" line="58"/>
         <source>Location</source>
         <translation>网络地址</translation>
     </message>
