@@ -109,27 +109,32 @@
         <translation>调整窗口</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="63"/>
+        <location filename="../widgets/quietus.cpp" line="61"/>
+        <source>Reset window</source>
+        <translation>重置窗口</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="67"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="64"/>
+        <location filename="../widgets/quietus.cpp" line="68"/>
         <source>About me</source>
         <translation>关于我</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="69"/>
+        <location filename="../widgets/quietus.cpp" line="73"/>
         <source>Project domain</source>
         <translation>项目主页</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="74"/>
+        <location filename="../widgets/quietus.cpp" line="78"/>
         <source>Bug report</source>
         <translation>错误报告</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="84"/>
+        <location filename="../widgets/quietus.cpp" line="88"/>
         <source>E&amp;xit</source>
         <translation>结(E&amp;)束</translation>
     </message>

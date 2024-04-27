@@ -41,6 +41,7 @@ namespace Model
         void setMobileMode(bool mobileMode);
         bool hasSizeAndPosition() const;
         void setSizeAndPosition(int width, int height, int x, int y);
+        void clearSizeAndPosition();
         int getWidth() const;
         int getHeight() const;
         int getX() const;

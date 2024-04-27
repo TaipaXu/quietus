@@ -42,6 +42,7 @@ namespace Widget
     private slots:
         void onTrayMenuActivated(QSystemTrayIcon::ActivationReason reason) const;
         void onAdjustWindow() const;
+        void onResetWindow() const;
         void onAdjustDone(int width, int height, int x, int y) const;
         void onFaviconReady(const QString &url, const QString &fileName) const;
         void onHome();

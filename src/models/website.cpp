@@ -73,6 +73,11 @@ namespace Model
         }
     }
 
+    void Website::clearSizeAndPosition()
+    {
+        sizeAndPosition.reset();
+    }
+
     void Website::clear()
     {
         name.clear();

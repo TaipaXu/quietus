@@ -58,6 +58,10 @@ namespace Widget
         connect(adjustWindowAction, &QAction::triggered, this, &Quietus::onAdjustWindow);
         trayMenu->addAction(adjustWindowAction);
 
+        QAction *resetWindowAction = new QAction(tr("Reset window"), this);
+        connect(resetWindowAction, &QAction::triggered, this, &Quietus::onResetWindow);
+        trayMenu->addAction(resetWindowAction);
+
         trayMenu->addSeparator();
 
         QMenu *aboutMenu = new QMenu(tr("About"));
@@ -193,6 +197,15 @@ namespace Widget
         }
         engine->rootObjects().first()->setProperty("visible", true);
         engine->rootObjects().first()->setProperty("adjusting", true);
+    }
+
+    void Quietus::onResetWindow() const
+    {
+        engine->rootObjects().first()->setProperty("width", 310);
+        engine->rootObjects().first()->setProperty("height", 500);
+
+        website->clearSizeAndPosition();
+        websitePersistence->updateWebsites();
     }
 
     void Quietus::onAdjustDone(int width, int height, int x, int y) const
