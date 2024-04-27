@@ -89,22 +89,42 @@
 <context>
     <name>Widget::Quietus</name>
     <message>
-        <location filename="../widgets/quietus.cpp" line="38"/>
+        <location filename="../widgets/quietus.cpp" line="40"/>
         <source>Quietus</source>
         <translation>悄声细语</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="44"/>
+        <location filename="../widgets/quietus.cpp" line="46"/>
         <source>New one</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="48"/>
+        <location filename="../widgets/quietus.cpp" line="50"/>
         <source>Remove me</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../widgets/quietus.cpp" line="55"/>
+        <location filename="../widgets/quietus.cpp" line="56"/>
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="57"/>
+        <source>About me</source>
+        <translation>关于我</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="62"/>
+        <source>Project domain</source>
+        <translation>项目主页</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="67"/>
+        <source>Bug report</source>
+        <translation>错误报告</translation>
+    </message>
+    <message>
+        <location filename="../widgets/quietus.cpp" line="77"/>
         <source>E&amp;xit</source>
         <translation>结(E&amp;)束</translation>
     </message>

@@ -1,5 +1,6 @@
 #include "./quietus.hpp"
 #include <QApplication>
+#include <QDesktopServices>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QMenu>
@@ -8,6 +9,7 @@
 #include "persistence/website.hpp"
 #include "links/favorite.hpp"
 #include "network/faviconManager.hpp"
+#include "appConfig.hpp"
 
 namespace Widget
 {
@@ -48,6 +50,26 @@ namespace Widget
         QAction *removeMeAction = new QAction(tr("Remove me"), this);
         connect(removeMeAction, &QAction::triggered, this, &Quietus::removeInstance);
         trayMenu->addAction(removeMeAction);
+
+        trayMenu->addSeparator();
+
+        QMenu *aboutMenu = new QMenu(tr("About"));
+        QAction *aboutMeAction = new QAction(tr("About me"), this);
+        connect(aboutMeAction, &QAction::triggered, []() {
+            QDesktopServices::openUrl(QUrl(ORGANIZATION_DOMAIN));
+        });
+        aboutMenu->addAction(aboutMeAction);
+        QAction *projectDomainAction = new QAction(tr("Project domain"), this);
+        connect(projectDomainAction, &QAction::triggered, []() {
+            QDesktopServices::openUrl(QUrl(PROJECT_DOMAIN));
+        });
+        aboutMenu->addAction(projectDomainAction);
+        QAction *bugReportAction = new QAction(tr("Bug report"), this);
+        connect(bugReportAction, &QAction::triggered, []() {
+            QDesktopServices::openUrl(QUrl(PROJECT_ISSUES_DOMAIN));
+        });
+        aboutMenu->addAction(bugReportAction);
+        trayMenu->addMenu(aboutMenu);
 
         trayMenu->addSeparator();
 
