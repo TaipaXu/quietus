@@ -149,6 +149,11 @@ ColumnLayout {
                 webview.runJavaScript(js);
             }
         }
+
+        onNewWindowRequested: (request) => {
+            webview.url = request.requestedUrl
+            request.accept()
+        }
     }
 
     WebEngineProfile {
