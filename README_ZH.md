@@ -1,10 +1,10 @@
-# Quietus
+# 悄声细语
 
 在系统托盘快速唤起浏览器。
 
 [English](./README.md) | 中文
 
-![](./app.png)
+![](./app.gif)
 
 ## 编译
 

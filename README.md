@@ -4,7 +4,7 @@ Quickly summon the browser from the system tray.
 
 English | [中文](./README_ZH.md)
 
-![](./app.png)
+![](./app.gif)
 
 ## Compiling
 
