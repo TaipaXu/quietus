@@ -108,7 +108,6 @@ ColumnLayout {
         id: webview
         Layout.fillWidth: true
         height: parent.height - header.height
-        url: root.url
         profile: webProfile
 
         onTitleChanged: {
@@ -200,6 +199,8 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
+        webview.url = root.url;
+
         if (FavoriteLink.isFavoriteWebsite(root.url)) {
             favoriteButton.icon.source = "qrc:/images/favorite"
         } else {
