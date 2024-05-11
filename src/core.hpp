@@ -11,7 +11,7 @@ namespace Persistence
 
 namespace Model
 {
-    class Website;
+    class BrowserWebsite;
 } // namespace Model
 
 class Core : public QObject
@@ -23,7 +23,7 @@ public:
     ~Core() = default;
 
 private:
-    void createInstance(const std::shared_ptr<Model::Website> &website);
+    void createInstance(const std::shared_ptr<Model::BrowserWebsite> &website);
 
 private slots:
     void onNewInstance();

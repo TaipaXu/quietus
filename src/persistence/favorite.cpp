@@ -58,9 +58,8 @@ namespace Persistence
                 const QString websiteName = websiteObject["name"].toString();
                 const QString favicon = websiteObject["favicon"].toString();
                 const QString url = websiteObject["url"].toString();
-                const bool isMobileMode = websiteObject["isMobileMode"].toBool(true);
 
-                Model::Website *websiteModel = new Model::Website(id, websiteName, favicon, url, isMobileMode);
+                Model::Website *websiteModel = new Model::Website(id, websiteName, favicon, url);
                 websites.push_back(websiteModel);
             }
             Model::FavoriteGroup *favoriteGroup = new Model::FavoriteGroup(id, name, websites);
@@ -93,7 +92,6 @@ namespace Persistence
                 websiteObject["name"] = website->getName();
                 websiteObject["favicon"] = website->getFavicon();
                 websiteObject["url"] = website->getUrl();
-                websiteObject["isMobileMode"] = website->isMobileMode();
 
                 websitesArray.append(websiteObject);
             }
@@ -140,9 +138,8 @@ namespace Persistence
                 const QString websiteName = websiteObject["name"].toString();
                 const QString favicon = websiteObject["favicon"].toString();
                 const QString url = websiteObject["url"].toString();
-                const bool isMobileMode = websiteObject["isMobileMode"].toBool(true);
 
-                Model::Website *websiteModel = new Model::Website(id, websiteName, favicon, url, isMobileMode);
+                Model::Website *websiteModel = new Model::Website(id, websiteName, favicon, url);
                 websites.push_back(websiteModel);
             }
             Model::FavoriteGroup *favoriteGroup = new Model::FavoriteGroup(id, name, websites);
@@ -174,7 +171,6 @@ namespace Persistence
         //         websiteObject["name"] = website->getName();
         //         websiteObject["favicon"] = website->getFavicon();
         //         websiteObject["url"] = website->getUrl();
-        //         websiteObject["isMobileMode"] = website->isMobileMode();
 
         //         websitesArray.append(websiteObject);
         //     }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "./persistence.hpp"
-#include "models/website.hpp"
+#include "models/browserWebsite.hpp"
 #include <memory>
 #include <list>
 
@@ -16,9 +16,9 @@ namespace Persistence
         Website &operator=(Website &&) = delete;
         static Website *getInstance();
 
-        const std::list<std::shared_ptr<Model::Website>> &getWebsites() const;
-        void addWebsite(const std::shared_ptr<Model::Website> &website);
-        void removeWebsite(const std::shared_ptr<Model::Website> &website);
+        const std::list<std::shared_ptr<Model::BrowserWebsite>> &getWebsites() const;
+        void addWebsite(const std::shared_ptr<Model::BrowserWebsite> &website);
+        void removeWebsite(const std::shared_ptr<Model::BrowserWebsite> &website);
         void updateWebsites();
 
     private:
@@ -33,6 +33,6 @@ namespace Persistence
         void checkDataFile() const;
 
     private:
-        std::list<std::shared_ptr<Model::Website>> websites;
+        std::list<std::shared_ptr<Model::BrowserWebsite>> websites;
     };
 } // namespace Persistence

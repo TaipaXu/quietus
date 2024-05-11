@@ -8,7 +8,7 @@
 #include <QQmlContext>
 #include <QMenu>
 #include <QIcon>
-#include "models/website.hpp"
+#include "models/browserWebsite.hpp"
 #include "persistence/website.hpp"
 #include "links/favorite.hpp"
 #include "network/faviconManager.hpp"
@@ -16,7 +16,7 @@
 
 namespace Widget
 {
-    Quietus::Quietus(const std::shared_ptr<Model::Website> &website, QObject *parent)
+    Quietus::Quietus(const std::shared_ptr<Model::BrowserWebsite> &website, QObject *parent)
         : QObject(parent), website{website}, tray{nullptr}, trayMenu{nullptr}, engine{nullptr}
     {
         websitePersistence = Persistence::Website::getInstance();
@@ -31,7 +31,7 @@ namespace Widget
         engine->deleteLater();
     }
 
-    const std::shared_ptr<Model::Website> &Quietus::getWebsite() const
+    const std::shared_ptr<Model::BrowserWebsite> &Quietus::getWebsite() const
     {
         return website;
     }

@@ -1,5 +1,4 @@
 #include "./favorite.hpp"
-#include "./website.hpp"
 #include "utils/common.hpp"
 
 namespace Model
@@ -10,7 +9,7 @@ namespace Model
     }
 
     FavoriteGroup::FavoriteGroup(const QString &id, const QString &name, const QList<Model::Website *> &websites, QObject *parent)
-        : QObject(parent), id(id), name(name), websites(websites)
+        : QObject(parent), id{id}, name{name}, websites{websites}
     {
     }
 

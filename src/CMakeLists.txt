@@ -22,6 +22,8 @@ set(SOURCES
         widgets/quietus.hpp
         widgets/quietus.cpp
 
+        models/browserWebsite.hpp
+        models/browserWebsite.cpp
         models/website.hpp
         models/website.cpp
         models/favorite.hpp

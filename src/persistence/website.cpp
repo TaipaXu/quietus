@@ -25,18 +25,18 @@ namespace Persistence
         websites.clear();
     }
 
-    const std::list<std::shared_ptr<Model::Website>> &Website::getWebsites() const
+    const std::list<std::shared_ptr<Model::BrowserWebsite>> &Website::getWebsites() const
     {
         return websites;
     }
 
-    void Website::addWebsite(const std::shared_ptr<Model::Website> &website)
+    void Website::addWebsite(const std::shared_ptr<Model::BrowserWebsite> &website)
     {
         websites.push_back(website);
         writeSettings();
     }
 
-    void Website::removeWebsite(const std::shared_ptr<Model::Website> &website)
+    void Website::removeWebsite(const std::shared_ptr<Model::BrowserWebsite> &website)
     {
         websites.remove(website);
         writeSettings();
@@ -83,7 +83,7 @@ namespace Persistence
                     sizeAndPositionObject["x"].toInt(),
                     sizeAndPositionObject["y"].toInt());
             }
-            const std::shared_ptr<Model::Website> websiteModel = std::make_shared<Model::Website>(id, name, favicon, url, isMobileMode, std::move(sizeAndPosition));
+            const std::shared_ptr<Model::BrowserWebsite> websiteModel = std::make_shared<Model::BrowserWebsite>(id, name, favicon, url, isMobileMode, std::move(sizeAndPosition));
             websites.push_back(websiteModel);
         }
     }

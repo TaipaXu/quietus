@@ -10,7 +10,7 @@ namespace Persistence
 
 namespace Model
 {
-    class Website;
+    class BrowserWebsite;
 } // namespace Model
 
 QT_BEGIN_NAMESPACE
@@ -24,10 +24,10 @@ namespace Widget
         Q_OBJECT
 
     public:
-        explicit Quietus(const std::shared_ptr<Model::Website> &website, QObject *parent = nullptr);
+        explicit Quietus(const std::shared_ptr<Model::BrowserWebsite> &website, QObject *parent = nullptr);
         ~Quietus();
 
-        const std::shared_ptr<Model::Website> &getWebsite() const;
+        const std::shared_ptr<Model::BrowserWebsite> &getWebsite() const;
 
     signals:
         void newInstance() const;
@@ -52,7 +52,7 @@ namespace Widget
         void onMobileModeChanged(bool isMobileMode) const;
 
     private:
-        std::shared_ptr<Model::Website> website;
+        std::shared_ptr<Model::BrowserWebsite> website;
         Persistence::Website *websitePersistence;
         QSystemTrayIcon *tray;
         QMenu *trayMenu;
