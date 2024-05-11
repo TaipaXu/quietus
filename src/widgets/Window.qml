@@ -26,6 +26,7 @@ ApplicationWindow {
     signal urlModified(string url)
     signal mobileModeModified(bool isMobileMode)
     signal adjustDone(int width, int height, int x, int y)
+    signal removeMe()
 
     Image {
         id: backgroundImage
@@ -122,6 +123,25 @@ ApplicationWindow {
             root.adjusting = false
             root.adjustDone(root.width, root.height, root.x, root.y)
         }
+    }
+
+
+    Shortcut {
+        sequence: StandardKey.Close
+
+        onActivated: root.close()
+    }
+
+    Shortcut {
+        sequence: "Ctrl+E"
+
+        onActivated: root.removeMe()
+    }
+
+    Shortcut {
+        sequence: StandardKey.Quit
+
+        onActivated: Qt.quit()
     }
 
     Utils {

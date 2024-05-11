@@ -147,7 +147,7 @@
         <translation>悄声细语</translation>
     </message>
     <message>
-        <location filename="../widgets/Window.qml" line="58"/>
+        <location filename="../widgets/Window.qml" line="59"/>
         <source>Location</source>
         <translation>网络地址</translation>
     </message>

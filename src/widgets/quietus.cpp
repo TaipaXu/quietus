@@ -116,6 +116,7 @@ namespace Widget
         QObject::connect(root, SIGNAL(urlModified(QString)), this, SLOT(onUrlChanged(QString)));
         QObject::connect(root, SIGNAL(mobileModeModified(bool)), this, SLOT(onMobileModeChanged(bool)));
         QObject::connect(root, SIGNAL(adjustDone(int, int, int, int)), this, SLOT(onAdjustDone(int, int, int, int)));
+        QObject::connect(root, SIGNAL(removeMe()), this, SIGNAL(removeInstance()));
     }
 
     void Quietus::setWidgetPosition() const
