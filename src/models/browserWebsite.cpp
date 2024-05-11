@@ -3,7 +3,7 @@
 namespace Model
 {
     BrowserWebsite::BrowserWebsite(QObject *parent)
-        : Website(parent), mobileMode(false)
+        : Website(parent), mobileMode(true)
     {
     }
 
