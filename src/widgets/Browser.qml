@@ -111,17 +111,19 @@ ColumnLayout {
         profile: webProfile
 
         onTitleChanged: {
-            root.name = webview.title
-            root.titleChanged(webview.title)
+            root.name = webview.title;
+            root.titleChanged(webview.title);
         }
 
         onUrlChanged: {
-            root.url = webview.url
+            root.url = webview.url;
+
+            checkFavorite();
         }
 
         onIconChanged: {
-            root.favicon = webview.icon
-            root.iconChanged(webview.icon)
+            root.favicon = webview.icon;
+            root.iconChanged(webview.icon);
         }
 
         onLoadingChanged: (loadingInfo) => {
@@ -190,17 +192,15 @@ ColumnLayout {
         target: FavoriteLink
 
         function onFavoriteGroupsChanged() {
-            if (FavoriteLink.isFavoriteWebsite(root.url)) {
-                favoriteButton.icon.source = "qrc:/images/favorite"
-            } else {
-                favoriteButton.icon.source = "qrc:/images/unfavorite"
-            }
+            checkFavorite();
         }
     }
 
     Component.onCompleted: {
         webview.url = root.url;
+    }
 
+    function checkFavorite() {
         if (FavoriteLink.isFavoriteWebsite(root.url)) {
             favoriteButton.icon.source = "qrc:/images/favorite"
         } else {
