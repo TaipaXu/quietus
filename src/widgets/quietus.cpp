@@ -125,7 +125,17 @@ namespace Widget
 #ifdef Q_OS_MACOS
         engine->rootObjects().first()->setProperty("y", 0);
 #else
-        engine->rootObjects().first()->setProperty("y", QApplication::primaryScreen()->size().height() - engine->rootObjects().first()->property("height").toInt());
+        QPoint cursorPos = QCursor::pos();
+        QScreen *screen = QGuiApplication::screenAt(cursorPos);
+        if (screen)
+        {
+            QRect totalGeometry;
+            for (auto &&screen : QGuiApplication::screens())
+            {
+                totalGeometry = totalGeometry.united(screen->geometry());
+            }
+            engine->rootObjects().first()->setProperty("y", totalGeometry.height() - engine->rootObjects().first()->property("height").toInt());
+        }
 #endif
     }
 
