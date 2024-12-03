@@ -122,7 +122,7 @@ namespace Widget
     void Quietus::setWidgetPosition() const
     {
         engine->rootObjects().first()->setProperty("x", QCursor::pos().x() - 150);
-#ifdef Q_OS_MACOS
+#ifdef __APPLE__
         engine->rootObjects().first()->setProperty("y", 0);
 #else
         QPoint cursorPos = QCursor::pos();

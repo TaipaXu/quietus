@@ -6,6 +6,14 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef __linux__
+    QByteArray waylandDisplay = qgetenv("WAYLAND_DISPLAY");
+    if (!waylandDisplay.isEmpty())
+    {
+        qputenv("QT_QPA_PLATFORM", QByteArray("xcb"));
+    }
+#endif
+
     QtWebEngineQuick::initialize();
     QApplication app(argc, argv);
     app.setOrganizationDomain(ORGANIZATION_DOMAIN);
